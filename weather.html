@@ -1,0 +1,203 @@
+<html>
+    <head>
+        <title>Weather</title>
+        <link href="" rel="icon">
+        <link href="weather.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body id="mybody">
+        <p id="out"></p>
+        <div id="all">
+            <div class="first col-md-3">
+                <div class="loc">
+                    <div class="image" id="weaimg">
+                        <img src="icons/unknown.png" alt="unknonw"/>
+                    </div>
+                    <div>
+                        <p id="imgname"></p>
+                    </div>
+                    <hr/>
+                    <div class="temp">
+                        <p id="tempmax"></p>
+                        <p id="tempmin"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="first col-md-3">
+                <div class="loc">
+                    <div class="image" id="weaimg1">
+                        <img src="icons/unknown.png" alt="unknonw"/>
+                    </div>
+                    <div>
+                        <p id="imgname1"></p>
+                    </div>
+                    <hr/>
+                    <div class="temp">
+                        <p id="tempmax1"></p>
+                        <p id="tempmin1"></p>
+                    </div>
+                </div>
+            </div>
+             <div class="first col-md-3">
+                <div class="loc">
+                    <div class="image" id="weaimg2">
+                        <img src="icons/unknown.png" alt="unknonw"/>
+                    </div>
+                    <div>
+                        <p id="imgname2"></p>
+                    </div>
+                    <hr/>
+                    <div class="temp">
+                        <p id="tempmax2"></p>
+                        <p id="tempmin2"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="first space col-md-3">
+                <div class="loc">
+                    <div class="image" id="weaimg3">
+                        <img src="icons/unknown.png" alt="unknonw"/>
+                    </div>
+                    <div>
+                        <p id="imgname3"></p>
+                    </div>
+                    <hr/>
+                    <div class="temp">
+                        <p id="tempmax3"></p>
+                        <p id="tempmin3"></p>
+                    </div>
+                </div>
+            </div> 
+            <div class="first col-md-3">
+                <div class="loc">
+                    <div class="image" id="weaimg4">
+                        <img src="icons/unknown.png" alt="unknonw"/>
+                    </div>
+                    <div>
+                        <p id="imgname4"></p>
+                    </div>
+                    <hr/>
+                    <div class="temp">
+                        <p id="tempmax4"></p>
+                        <p id="tempmin4"></p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <Script>
+            window.onload = geolocation()
+
+            //box 1
+            let x = document.getElementById('out');
+            let y = document.getElementById('weaimg');
+            let z = document.getElementById('tempmax');
+            let a = document.getElementById('tempmin');
+            let b = document.getElementById('imgname');
+
+            //box 2
+            let yy = document.getElementById('weaimg1');
+            let zz = document.getElementById('tempmax1');
+            let aa = document.getElementById('tempmin1');
+            let bb = document.getElementById('imgname1');
+
+            //box 3
+            let yyy = document.getElementById('weaimg2');
+            let zzz = document.getElementById('tempmax2');
+            let aaa = document.getElementById('tempmin2');
+            let bbb = document.getElementById('imgname2');
+
+            //box 4
+            let yyyy = document.getElementById('weaimg3');
+            let zzzz = document.getElementById('tempmax3');
+            let aaaa = document.getElementById('tempmin3');
+            let bbbb = document.getElementById('imgname3');
+
+            //box 5
+            let yyyyy = document.getElementById('weaimg4');
+            let zzzzz = document.getElementById('tempmax4');
+            let aaaaa = document.getElementById('tempmin4');
+            let bbbbb = document.getElementById('imgname4');
+
+
+            function geolocation (){
+
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(showPosition)
+                }
+                else{
+                    x.innerText = `error`
+                }
+            }
+
+            function showPosition(data){
+                console.log(data)
+                let lat = data.coords.latitude
+                let lon = data.coords.longitude
+
+                let url =`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&mode=json&units=metric&cnt=5&appid=fbf712a5a83d7305c3cda4ca8fe7ef29`
+
+                fetch(url,{method:"GET"})
+                .then((res) => res.json())
+                .then((data) =>{
+                    console.log(data)
+        //box 1
+                    let city = data.city.name ;
+                    let weaimg = data.list[0].weather[0].icon;
+                    let tempmax = data.list[0].temp.max
+                    let tempmin = data.list[0].temp.min
+                    let imgname = data.list[0].weather[0].main
+                    x.innerText = `${city}`
+                    y.innerHTML = `<img src=icons/${weaimg}.png />` 
+                    z.innerText = 'Max:'+`${tempmax}`+"°C"
+                    a.innerText = 'Min:'+`${tempmin}`+"°C"
+                    b.innerText = `${imgname}`
+        //box 2            
+                    let weaimg1 = data.list[1].weather[0].icon;
+                    let tempmax1 = data.list[1].temp.max
+                    let tempmin1 = data.list[1].temp.min
+                    let imgname1 = data.list[1].weather[0].main
+                    yy.innerHTML = `<img src=icons/${weaimg1}.png />` 
+                    zz.innerText = 'Max:'+`${tempmax1}`+"°C"
+                    aa.innerText = 'Min:'+`${tempmin1}`+"°C"
+                    bb.innerText = `${imgname1}`
+
+        //box 3          
+                    let weaimg2 = data.list[2].weather[0].icon;
+                    let tempmax2 = data.list[2].temp.max
+                    let tempmin2 = data.list[2].temp.min
+                    let imgname2 = data.list[2].weather[0].main
+                    yyy.innerHTML = `<img src=icons/${weaimg2}.png />` 
+                    zzz.innerText = 'Max:'+`${tempmax2}`+"°C"
+                    aaa.innerText = 'Min:'+`${tempmin2}`+"°C"
+                    bbb.innerText = `${imgname2}`
+
+
+        //box 4          
+                    let weaimg3 = data.list[3].weather[0].icon;
+                    let tempmax3 = data.list[3].temp.max
+                    let tempmin3 = data.list[3].temp.min
+                    let imgname3 = data.list[3].weather[0].main
+                    yyyy.innerHTML = `<img src=icons/${weaimg3}.png />` 
+                    zzzz.innerText = 'Max:'+`${tempmax3}`+"°C"
+                    aaaa.innerText = 'Min:'+`${tempmin3}`+"°C"
+                    bbbb.innerText = `${imgname3}`
+
+        //box 4          
+                    let weaimg4 = data.list[4].weather[0].icon;
+                    let tempmax4 = data.list[4].temp.max
+                    let tempmin4 = data.list[4].temp.min
+                    let imgname4 = data.list[4].weather[0].main
+                    yyyyy.innerHTML = `<img src=icons/${weaimg4}.png />` 
+                    zzzzz.innerText = 'Max:'+`${tempmax4}`+"°C"
+                    aaaaa.innerText = 'Min:'+`${tempmin4}`+"°C"
+                    bbbbb.innerText = `${imgname4}`
+                })
+            }
+
+        </Script>
+
+    </body>
+</html>
